@@ -1,7 +1,6 @@
 from sqlalchemy import Column, String, Integer, DateTime
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-import json
 import os
 
 database_path = os.environ['DATABASE_URL']
