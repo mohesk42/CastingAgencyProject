@@ -78,7 +78,7 @@ def create_app(test_config=None):
       abort(422)
   
   @app.route('/actors', methods=['POST'])
-  def create_actor():
+  def create_actor(jwt):
     body = request.get_json()
 
     name = body.get('name', None)
@@ -96,7 +96,7 @@ def create_app(test_config=None):
       abort(422)
   
   @app.route('/movies', methods=['POST'])
-  def create_movie():
+  def create_movie(jwt):
     body = request.get_json()
 
     title = body.get('title', None)
