@@ -70,4 +70,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'unprocessable')
 
+
+
+if __name__ == "__main__":
+    unittest.main()
+
         
