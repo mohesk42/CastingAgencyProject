@@ -191,6 +191,54 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'resource not found')
 
+    def test_assistant_delete_movie(self):
+        result = self.client().delete(
+            '/movies/4',
+            headers = {"Authorization": "Bearer " + ASSISTANT_TOKEN}
+        )
+        data = json.loads(result.data)
+
+        self.assertEqual(result.status_code, 403)
+        self.assertEqual(data['code'], 'unauthorized')
+        self.assertEqual(data['description'], 'User does not have permission')
+
+    def test_assistant_edit_movie(self):
+        movieData = {'title': 'Escape Room', 'release_date': '2018/1/10'}
+        result = self.client().patch(
+            '/movies/5',
+            json = movieData,
+            headers = {"Authorization": "Bearer " + ASSISTANT_TOKEN}
+        )
+        data = json.loads(result.data)
+
+        self.assertEqual(result.status_code, 403)
+        self.assertEqual(data['code'], 'unauthorized')
+        self.assertEqual(data['description'], 'User does not have permission')
+
+    def test_director_delete_movie(self):
+        result = self.client().delete(
+            '/movies/4',
+            headers = {"Authorization": "Bearer " + DIRECTOR_TOKEN}
+        )
+        data = json.loads(result.data)
+
+        self.assertEqual(result.status_code, 403)
+        self.assertEqual(data['code'], 'unauthorized')
+        self.assertEqual(data['description'], 'User does not have permission')
+
+    def test_director_edit_movie(self):
+        movieData = {'title': 'Escape Room', 'release_date': '2018/1/10'}
+        result = self.client().patch(
+            '/movies/5',
+            json = movieData,
+            headers = {"Authorization": "Bearer " + DIRECTOR_TOKEN}
+        )
+        data = json.loads(result.data)
+
+        self.assertEqual(result.status_code, 403)
+        self.assertEqual(data['code'], 'unauthorized')
+        self.assertEqual(data['description'], 'User does not have permission')
+
 
 
 if __name__ == "__main__":
