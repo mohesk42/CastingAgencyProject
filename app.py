@@ -16,6 +16,12 @@ def create_app(test_config=None):
     response.headers.add('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE,OPTIONS')
     return response
 
+  @app.route('/')
+  def index():
+    return jsonify({
+      'message': 'Hello'
+    })
+
   @app.route('/actors', methods=['GET'])
   @requires_auth('get:actors')
   def get_actors(jwt):
