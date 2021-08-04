@@ -23,7 +23,8 @@ def create_app(test_config=None):
     })
 
   @app.route('/actors', methods=['GET'])
-  def get_actors():
+  @requires_auth('get:actors')
+  def get_actors(jwt):
     actors = Actor.query.all()
     
     actorsList = []
