@@ -179,6 +179,12 @@ def create_app(test_config=None):
       "message": "unprocessable"
       }), 422
 
+  @app.errorhandler(AuthError)
+  def AuthErrorP(error):
+      response = jsonify(error.error)
+      response.status_code = error.status_code
+      return response
+
   return app
 
 app = create_app()
