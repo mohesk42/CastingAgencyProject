@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, abort, jsonify
 from flask_cors import CORS
 from models import Actor, Movie, db, setup_db
+from auth import AuthError, requires_auth
 
 def create_app(test_config=None):
   # create and configure the app
@@ -16,7 +17,8 @@ def create_app(test_config=None):
     return response
 
   @app.route('/actors', methods=['GET'])
-  def get_actors():
+  @requires_auth('get:actors')
+  def get_actors(jwt):
     actors = Actor.query.all()
     
     actorsList = []
@@ -32,7 +34,8 @@ def create_app(test_config=None):
       }), 200
   
   @app.route('/movies', methods=['GET'])
-  def get_movies():
+  @requires_auth('get:movies')
+  def get_movies(jwt):
     movies = Movie.query.all()
     
     moviesList = []
@@ -48,7 +51,8 @@ def create_app(test_config=None):
       }), 200
   
   @app.route('/actors/<int:actor_id>', methods=['DELETE'])
-  def delete_actor(actor_id):
+  @requires_auth('delete:actors')
+  def delete_actor(jwt, actor_id):
     actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
     if actor is None:
       abort(404)
@@ -62,7 +66,8 @@ def create_app(test_config=None):
       abort(422)
   
   @app.route('/movies/<int:movie_id>', methods=['DELETE'])
-  def delete_movie(movie_id):
+  @requires_auth('delete:movies')
+  def delete_movie(jwt, movie_id):
     movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
     if movie is None:
       abort(404)
@@ -76,7 +81,8 @@ def create_app(test_config=None):
       abort(422)
   
   @app.route('/actors', methods=['POST'])
-  def create_actor():
+  @requires_auth('add:actors')
+  def create_actor(jwt):
     body = request.get_json()
 
     name = body.get('name', None)
@@ -94,7 +100,8 @@ def create_app(test_config=None):
       abort(422)
   
   @app.route('/movies', methods=['POST'])
-  def create_movie():
+  @requires_auth('add:movies')
+  def create_movie(jwt):
     body = request.get_json()
 
     title = body.get('title', None)
@@ -111,7 +118,8 @@ def create_app(test_config=None):
       abort(422)
 
   @app.route('/actors/<int:actor_id>', methods=['PATCH'])
-  def edit_actor(actor_id):
+  @requires_auth('edit:actors')
+  def edit_actor(jwt, actor_id):
     actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
     if actor is None:
       abort(404)
@@ -131,7 +139,8 @@ def create_app(test_config=None):
     }), 200
 
   @app.route('/movies/<int:movie_id>', methods=['PATCH'])
-  def edit_movie(movie_id):
+  @requires_auth('edit:movies')
+  def edit_movie(jwt, movie_id):
     movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
     if movie is None:
       abort(404)
