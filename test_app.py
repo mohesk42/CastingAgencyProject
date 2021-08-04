@@ -226,10 +226,10 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data['code'], 'unauthorized')
         self.assertEqual(data['description'], 'User does not have permission')
 
-    def test_director_edit_movie(self):
+    def test_director_create_movie(self):
         movieData = {'title': 'Escape Room', 'release_date': '2018/1/10'}
-        result = self.client().patch(
-            '/movies/5',
+        result = self.client().post(
+            '/movies',
             json = movieData,
             headers = {"Authorization": "Bearer " + DIRECTOR_TOKEN}
         )
