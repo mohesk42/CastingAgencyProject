@@ -12,6 +12,10 @@ This API has 3 types of users:
 1. Heroku: https://casting-agency2442.herokuapp.com/
 2. Localhost: localhost:5000
 
+## Authentication
+
+You can use this [link](https://casting-agency-2442.us.auth0.com/authorize?audience=casting&response_type=token&client_id=PHKxBKUlD0kQmZLudJ6IDWFVbmWGMLAq&redirect_uri=https://127.0.0.1:8080/) to login using the credentials provied for each role. 
+
 ## Setup for local
 
 ## Install requirements
