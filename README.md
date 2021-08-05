@@ -1,6 +1,6 @@
 # Casting Agency Project
 
-Casting Agency API is used to by several types of users to manage and view movies and actors.
+The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
 
 This API has 3 types of users:
 
@@ -33,8 +33,12 @@ python manage.py seed
 ```
 
 ## To start the server
+First excute this command to setup environment variables
+```
+bash setup.sh
+```
 
-Use the following commands to create the database 
+Then use the following commands to start the the server 
 ```
 export FLASK_APP=app
 flask run
@@ -55,10 +59,17 @@ python test_flaskr.py
 
 ### Getting Started
 - Base URL: `http://127.0.0.1:5000/` or live at `https://casting-agency2442.herokuapp.com/` 
-- Authentication: the authentication is deployed using Auth0 service. There are three roles:
-1. Casting Assistant
+- Authentication: the authentication is deployed using Auth0 service.
+
+### RBAC
+There are three roles: 
+
+1. Casting Assistant: 
+* permissions: get:actors, get:movies
 2. Casting Director
-3. Executive Producer 
+* permissions: get:actors, get:movies, add:actors, delete:actors, edit:actors, edit:movies 
+3. Executive Producer
+* permissions: get:actors, get:movies, add:actors, delete:actors, edit:actors, edit:movies, add:movies, delete:movies
 
 ### Error Handling
 Errors are returned as JSON objects in the following format:
@@ -79,7 +90,8 @@ The API will return three error types when requests fail:
     - Returns all actors.
     - and success status.
     - Require users of type assistant, director, and executive producer
- 
+- RBAC:
+    - get:actors
 - Sample: `curl http://127.0.0.1:5000/actors`
 
 ```
@@ -113,7 +125,10 @@ The API will return three error types when requests fail:
     - Returns all movies.
     - and success status.
     - Require users of type assistant, director, and executive producer
- 
+
+- RBAC:
+    - get:movies
+
 - Sample: `curl http://127.0.0.1:5000/movies`
 
 ```
@@ -139,7 +154,10 @@ The API will return three error types when requests fail:
     - Delete an actor.
     - return success status and deleted actor ID.
     - Require users of type director, and executive producer
- 
+
+- RBAC:
+    - delete:actors
+
 - Sample: `curl http://127.0.0.1:5000/actors/1 -X DELETE`
 
 ```
@@ -154,7 +172,10 @@ The API will return three error types when requests fail:
     - Delete a movie.
     - return success status and deleted movie ID.
     - Require users of type executive producer
- 
+
+- RBAC:
+    - delete:movies
+
 - Sample: `curl http://127.0.0.1:5000/movies/1 -X DELETE`
 
 ```
@@ -169,6 +190,9 @@ The API will return three error types when requests fail:
     - create new actor.
     - return sucess status and actor data.
     - Require users of type director, and executive producer
+
+- RBAC:
+    - add:actors
  
 - Sample: `curl http://127.0.0.1:5000/actors -X POST -H "Content-Type: application/json" -d '{ "name": "Ahmed", "age": "44", "gender": "male"}'`
 
@@ -189,6 +213,9 @@ The API will return three error types when requests fail:
     - create new movie.
     - return sucess status and movie data.
     - Require users of type executive producer
+
+- RBAC:
+    - add:movies
  
 - Sample: `curl http://127.0.0.1:5000/movies -X POST -H "Content-Type: application/json" -d '{ "title": "Titanc", "release_date": "1990/1/1"}'`
 
@@ -208,6 +235,9 @@ The API will return three error types when requests fail:
     - edit actor.
     - return sucess status and actor data.
     - Require users of type director, and executive producer
+
+- RBAC:
+    - edit:actors
  
 - Sample: `curl http://127.0.0.1:5000/actors/4 -X PATCH -H "Content-Type: application/json" -d '{ "name": "Nasser", "age": "44", "gender": "male"}'`
 
@@ -228,6 +258,9 @@ The API will return three error types when requests fail:
     - edit movie.
     - return sucess status and movie data.
     - Require users of type director, and executive producer
+
+- RBAC:
+    - edit:movies
  
 - Sample: `curl http://127.0.0.1:5000/movies/3 -X PATCH -H "Content-Type: application/json" -d '{ "title": "Titanc", "release_date": "1995/1/1"}'`
 
