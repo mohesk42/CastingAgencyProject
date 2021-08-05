@@ -13,11 +13,15 @@ def create_app(test_config=None):
 
   @app.after_request
   def after_request(response):
-    response.headers.add('Access-Control-Allow-Headers',
-      'Content-Type,Authorization,true')
+    response.headers.add(
+      'Access-Control-Allow-Headers',
+      'Content-Type,Authorization,true'
+    )
 
-    response.headers.add('Access-Control-Allow-Methods',
-      'GET,POST,PATCH,DELETE,OPTIONS')
+    response.headers.add(
+      'Access-Control-Allow-Methods',
+      'GET,POST,PATCH,DELETE,OPTIONS'
+    )
 
     return response
 
@@ -35,7 +39,7 @@ def create_app(test_config=None):
     actorsList = []
     for actor in actors:
       actorsList.append(actor.format())
-    
+
     if len(actorsList) == 0:
       abort(404)
     else:
@@ -43,7 +47,7 @@ def create_app(test_config=None):
         'success': True,
         'actors': actorsList
       }), 200
-  
+
   @app.route('/movies', methods=['GET'])
   @requires_auth('get:movies')
   def get_movies(jwt):
@@ -208,6 +212,7 @@ def create_app(test_config=None):
       return response
 
   return app
+
 
 app = create_app()
 

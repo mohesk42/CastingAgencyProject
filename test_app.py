@@ -9,6 +9,7 @@ ASSISTANT_TOKEN = os.environ["ASSISTANT_TOKEN"]
 DIRECTOR_TOKEN = os.environ["DIRECTOR_TOKEN"]
 EP_TOKEN = os.environ["EP_TOKEN"]
 
+
 class CastingAgencyTestCase(unittest.TestCase):
     def setUp(self):
         self.app = create_app()

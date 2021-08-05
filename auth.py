@@ -16,7 +16,7 @@ class AuthError(Exception):
         self.status_code = status_code
 
 
-## Auth Header
+# Auth Header
 
 def get_token_auth_header():
     auth = request.headers.get('Authorization', None)
@@ -41,6 +41,7 @@ def get_token_auth_header():
 
     return parts[1]
 
+
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
         raise AuthError({
@@ -53,6 +54,7 @@ def check_permissions(permission, payload):
             'description': 'User does not have permission'
         }, 403)
     return True
+
 
 def verify_decode_jwt(token):
     # Note: this code taken from example (BasicFlaskAuth) from udacity
@@ -107,6 +109,7 @@ def verify_decode_jwt(token):
                 'code': 'invalid_header',
                 'description': 'Unable to find the appropriate key.'
             }, 403)
+
 
 def requires_auth(permission=''):
     def requires_auth_decorator(f):

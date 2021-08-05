@@ -7,6 +7,7 @@ database_path = os.environ['DATABASE_URL']
 
 db = SQLAlchemy()
 
+
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -40,9 +41,10 @@ class Actor(db.Model):
             'gender': self.gender
         }
 
+
 class Movie(db.Model):
     __tablename__ = 'movies'
-    id = Column(Integer, primary_key = True)
+    id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
     releaseDate = Column(DateTime(), nullable=False)
 
@@ -52,11 +54,11 @@ class Movie(db.Model):
 
     def update(self):
         db.session.commit()
-    
+
     def delete(self):
         db.session.delete(self)
         db.session.commit()
-    
+
     def format(self):
         return {
             'id': self.id,

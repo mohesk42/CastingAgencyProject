@@ -9,6 +9,7 @@ migrate = Migrate(app, db)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
+
 @manager.command
 def seed():
     actor1 = Actor(name='Nemo', age='29', gender='Female')
@@ -20,6 +21,7 @@ def seed():
     movie2 = Movie(title='Fire', releaseDate='2014/4/3')
     movie1.insert()
     movie2.insert()
+
 
 if __name__ == '__main__':
     manager.run()
