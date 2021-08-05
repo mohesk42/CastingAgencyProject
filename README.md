@@ -65,11 +65,11 @@ python test_flaskr.py
 There are three roles: 
 
 1. Casting Assistant: 
-* permissions: get:actors, get:movies
+    * permissions: get:actors, get:movies
 2. Casting Director
-* permissions: get:actors, get:movies, add:actors, delete:actors, edit:actors, edit:movies 
+    * permissions: get:actors, get:movies, add:actors, delete:actors, edit:actors, edit:movies 
 3. Executive Producer
-* permissions: get:actors, get:movies, add:actors, delete:actors, edit:actors, edit:movies, add:movies, delete:movies
+    * permissions: get:actors, get:movies, add:actors, delete:actors, edit:actors, edit:movies, add:movies, delete:movies
 
 ### Error Handling
 Errors are returned as JSON objects in the following format:
