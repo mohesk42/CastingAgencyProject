@@ -35,7 +35,7 @@ python manage.py seed
 ## To start the server
 First excute this command to setup environment variables
 ```
-bash setup.sh
+source setup.sh
 ```
 
 Then use the following commands to start the the server 
@@ -52,7 +52,8 @@ dropdb castingagencydb
 createdb castingagencydb
 python manage.py db upgrade
 python manage.py seed
-python test_flaskr.py
+source setup.sh
+python test_app.py
 ```
 
 ## API Documentation
