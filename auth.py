@@ -3,13 +3,12 @@ from flask import request, _request_ctx_stack
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
+import os
 
+AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
+ALGORITHMS = [os.environ['ALGORITHMS']]
+API_AUDIENCE = os.environ['API_AUDIENCE']
 
-AUTH0_DOMAIN = 'casting-agency-2442.us.auth0.com'
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'casting'
-
-## AuthError Exception
 
 class AuthError(Exception):
     def __init__(self, error, status_code):
@@ -47,16 +46,16 @@ def check_permissions(permission, payload):
         raise AuthError({
             'code': 'invalid',
             'description': 'Permissions not found in JWT.'
-        },400)
+        }, 400)
     if permission not in payload['permissions']:
         raise AuthError({
             'code': 'unauthorized',
             'description': 'User does not have permission'
-        },403)
+        }, 403)
     return True
 
 def verify_decode_jwt(token):
-    #Note: this code taken from example (BasicFlaskAuth) from udacity
+    # Note: this code taken from example (BasicFlaskAuth) from udacity
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
     unverified_header = jwt.get_unverified_header(token)

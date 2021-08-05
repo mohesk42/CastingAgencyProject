@@ -4,6 +4,7 @@ from flask_cors import CORS
 from models import Actor, Movie, db, setup_db
 from auth import AuthError, requires_auth
 
+
 def create_app(test_config=None):
   # create and configure the app
   app = Flask(__name__)
@@ -12,8 +13,12 @@ def create_app(test_config=None):
 
   @app.after_request
   def after_request(response):
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE,OPTIONS')
+    response.headers.add('Access-Control-Allow-Headers',
+      'Content-Type,Authorization,true')
+
+    response.headers.add('Access-Control-Allow-Methods',
+      'GET,POST,PATCH,DELETE,OPTIONS')
+
     return response
 
   @app.route('/')
@@ -26,7 +31,7 @@ def create_app(test_config=None):
   @requires_auth('get:actors')
   def get_actors(jwt):
     actors = Actor.query.all()
-    
+
     actorsList = []
     for actor in actors:
       actorsList.append(actor.format())
@@ -62,6 +67,7 @@ def create_app(test_config=None):
     actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
     if actor is None:
       abort(404)
+
     try:
       actor.delete()
       return jsonify({
@@ -179,6 +185,22 @@ def create_app(test_config=None):
       "message": "unprocessable"
       }), 422
 
+  @app.errorhandler(400)
+  def bad_request(error):
+    return jsonify({
+      "success": False, 
+      "error": 400,
+      "message": "bad request"
+      }), 400
+
+  @app.errorhandler(500)
+  def server_error(error):
+    return jsonify({
+      "success": False, 
+      "error": 500,
+      "message": "internal server error"
+      }), 500
+
   @app.errorhandler(AuthError)
   def AuthErrorP(error):
       response = jsonify(error.error)
@@ -188,6 +210,7 @@ def create_app(test_config=None):
   return app
 
 app = create_app()
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)

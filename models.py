@@ -16,7 +16,7 @@ def setup_db(app, database_path=database_path):
 
 class Actor(db.Model):
     __tablename__ = 'actors'
-    id = Column(Integer, primary_key = True)
+    id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     age = Column(Integer, nullable=False)
     gender = Column(String, nullable=False)
